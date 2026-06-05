@@ -9,25 +9,35 @@ dotenv.config();
 
 const app = express();
 
+// Middleware
 app.use(express.json());
 app.use(cors());
 
+// Routes
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
 app.use("/task", task);
 
-mongoose.connect("mongodb+srv://pradeep:pradeep@cluster0.ltdgzcy.mongodb.net/?appName=Cluster0")
+// MongoDB Connection
+mongoose
+  .connect(process.env.MONGODB_URL)
   .then(() => {
     console.log("Connected to MongoDB");
 
-    const PORT = process.env.PORT || 5000;
+    // Run server only in local environment
+    if (!process.env.VERCEL) {
+      const PORT = process.env.PORT || 5000;
 
-    app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
-    });
+      app.listen(PORT, () => {
+        console.log(`Server is running on port ${PORT}`);
+      });
+    }
   })
   .catch((err) => {
-    console.log("Database connection error:", err);
+    console.error("Database connection error:", err);
   });
+
+// Export for Vercel
+module.exports = app;
