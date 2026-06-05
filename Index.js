@@ -18,8 +18,7 @@ app.get("/", (req, res) => {
 
 app.use("/task", task);
 
-mongoose
-  .connect(process.env.MONGODB_URL)
+mongoose.connect("mongodb+srv://pradeep:pradeep@cluster0.ltdgzcy.mongodb.net/?appName=Cluster0")
   .then(() => {
     console.log("Connected to MongoDB");
 
@@ -31,4 +30,4 @@ mongoose
   })
   .catch((err) => {
     console.log("Database connection error:", err);
-  });git 
+  });
