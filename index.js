@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const dotenv = require("dotenv");
-
+const user = require("./Routes/User")
 const task = require("./Router/Task");
 
 dotenv.config();
@@ -19,7 +19,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/task", task);
-
+app.use("/user", user);
 // MongoDB Connection
 mongoose
   .connect(process.env.MONGODB_URL)
